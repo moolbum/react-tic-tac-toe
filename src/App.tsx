@@ -25,6 +25,8 @@ const App: FC = (): JSX.Element => {
 
   return (
     <Container>
+      <h1>Tic Tac Toe</h1>
+      <h2>순서 : {state.isNext ? IsNext.x : IsNext.o}</h2>
       <section>
         {renderSquare(0)}
         {renderSquare(1)}
@@ -54,6 +56,19 @@ const Container = styled.article`
   height: 100vh;
   width: 100%;
   margin: 0 auto;
+
+  h1 {
+    padding: 8px 15px;
+    border-radius: 36px;
+    background: black;
+    color: white;
+    font-size: 28px;
+  }
+
+  h2 {
+    font-size: 20px;
+    padding: 20px 0;
+  }
 
   section {
     display: flex;
