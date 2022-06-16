@@ -8,10 +8,12 @@ const App: FC = (): JSX.Element => {
     squares: Array(9).fill(null),
     isNext: true,
   });
-  console.log(state);
 
   const handleClick = (i: number) => {
     const square = state.squares.slice();
+    if (calculate(square) || square[i]) {
+      return;
+    }
     square[i] = state.isNext ? IsNext.x : IsNext.o;
     setState({
       squares: square,
@@ -23,10 +25,42 @@ const App: FC = (): JSX.Element => {
     return <Square value={state.squares[i]} onClick={() => handleClick(i)} />;
   };
 
+  const calculate = (squares: Array<number | string>) => {
+    const lines = [
+      [0, 1, 2],
+      [3, 4, 5],
+      [6, 7, 8],
+      [0, 3, 6],
+      [1, 4, 7],
+      [2, 5, 8],
+      [0, 4, 8],
+      [2, 4, 6],
+    ];
+    for (let i = 0; i < lines.length; i++) {
+      const [a, b, c] = lines[i];
+      if (
+        squares[a] &&
+        squares[a] === squares[b] &&
+        squares[a] === squares[c]
+      ) {
+        return squares[a];
+      }
+    }
+    return null;
+  };
+
+  const winner = calculate(state.squares);
+
   return (
     <Container>
       <h1>Tic Tac Toe</h1>
-      <h2>순서 : {state.isNext ? IsNext.x : IsNext.o}</h2>
+
+      {winner ? (
+        <h2>winner : {winner}</h2>
+      ) : (
+        <h2>순서 : {state.isNext ? IsNext.x : IsNext.o}</h2>
+      )}
+
       <section>
         {renderSquare(0)}
         {renderSquare(1)}
