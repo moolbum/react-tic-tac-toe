@@ -11,7 +11,7 @@ const App: FC = (): JSX.Element => {
 
   const handleClick = (i: number) => {
     const square = state.squares.slice();
-    if (calculate(square) || square[i]) {
+    if (square[i]) {
       return;
     }
     square[i] = state.isNext ? IsNext.x : IsNext.o;
@@ -50,6 +50,9 @@ const App: FC = (): JSX.Element => {
   };
 
   const winner = calculate(state.squares);
+
+  if (winner) {
+  }
 
   return (
     <Container>
