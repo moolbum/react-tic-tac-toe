@@ -22,6 +22,7 @@ const Button = styled.button`
   font-size: 40px;
   font-weight: bold;
   line-height: 34px;
+  cursor: pointer;
 
   &:focus {
     outline: none;

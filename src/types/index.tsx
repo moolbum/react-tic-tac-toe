@@ -3,6 +3,8 @@ export enum IsNext {
   o = "O",
 }
 
+export type Winner = string | void | null;
+
 export interface SquareState {
   squares: Array<string>;
   isNext: boolean;

@@ -1,13 +1,22 @@
-import React, { FC, useState } from "react";
+import React, { FC, useEffect, useState } from "react";
 import styled from "styled-components";
 import Square from "./components/Square";
-import { IsNext, SquareState } from "./types";
+import { IsNext, SquareState, Winner } from "./types";
 
 const App: FC = (): JSX.Element => {
+  const [winner, setWinner] = useState<Winner>(null);
+  const [history, setHistory] = useState<any>();
   const [state, setState] = useState<SquareState>({
     squares: Array(9).fill(null),
     isNext: true,
   });
+
+  const getHistoryState = (square: any) => {
+    const array = square;
+    const historyState = [array, ...array];
+    setHistory(historyState);
+    console.log(history);
+  };
 
   const handleClick = (i: number) => {
     const square = state.squares.slice();
@@ -18,6 +27,14 @@ const App: FC = (): JSX.Element => {
     setState({
       squares: square,
       isNext: !state.isNext,
+    });
+    getHistoryState(square);
+  };
+
+  const handleResetClick = (): void => {
+    setState({
+      squares: Array(9).fill(null),
+      isNext: true,
     });
   };
 
@@ -49,17 +66,19 @@ const App: FC = (): JSX.Element => {
     return null;
   };
 
-  const winner = calculate(state.squares);
-
-  if (winner) {
-  }
+  useEffect(() => {
+    setWinner(calculate(state.squares));
+  }, [state.squares]);
 
   return (
     <Container>
       <h1>Tic Tac Toe</h1>
 
       {winner ? (
-        <h2>winner : {winner}</h2>
+        <Section>
+          <h2>winner : {winner}</h2>
+          <button onClick={handleResetClick}>Reset</button>
+        </Section>
       ) : (
         <h2>순서 : {state.isNext ? IsNext.x : IsNext.o}</h2>
       )}
@@ -111,5 +130,22 @@ const Container = styled.article`
     display: flex;
     padding: 0;
     text-align: center;
+  }
+`;
+
+const Section = styled.section`
+  width: 220px;
+  justify-content: space-between;
+  align-items: center;
+
+  button {
+    height: 35px;
+    padding: 5px 20px;
+    border-radius: 20px;
+    border: none;
+    background: black;
+    color: white;
+    font-size: 18px;
+    cursor: pointer;
   }
 `;
