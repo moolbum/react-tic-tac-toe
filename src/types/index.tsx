@@ -4,6 +4,6 @@ export enum IsNext {
 }
 
 export interface SquareState {
-  squares: Array<number | string>;
+  squares: Array<string>;
   isNext: boolean;
 }

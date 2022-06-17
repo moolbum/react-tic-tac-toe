@@ -25,7 +25,7 @@ const App: FC = (): JSX.Element => {
     return <Square value={state.squares[i]} onClick={() => handleClick(i)} />;
   };
 
-  const calculate = (squares: Array<number | string>) => {
+  const calculate = (squares: Array<string>) => {
     const lines = [
       [0, 1, 2],
       [3, 4, 5],
