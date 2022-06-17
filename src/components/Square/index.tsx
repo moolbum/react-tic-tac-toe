@@ -5,7 +5,7 @@ const Square = ({
   value,
   onClick,
 }: {
-  value: number | string;
+  value: string;
   onClick: (i: React.MouseEvent<HTMLButtonElement>) => void;
 }): JSX.Element => {
   return <Button onClick={onClick}>{value}</Button>;
