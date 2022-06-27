@@ -1,5 +1,6 @@
 import React, { FC, useEffect, useState } from "react";
 import styled from "styled-components";
+import Label from "./components/Label";
 import Square from "./components/Square";
 import { IsNext, SquareState, Winner } from "./types";
 
@@ -72,7 +73,9 @@ const App: FC = (): JSX.Element => {
 
   return (
     <Container>
-      <h1>Tic Tac Toe</h1>
+      <Label radius="round" background="black" fontColor="white">
+        Tic Tac Toe
+      </Label>
 
       {winner ? (
         <Section>
