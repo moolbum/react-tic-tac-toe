@@ -1,8 +1,12 @@
-import React, { FC, useEffect, useState } from "react";
+import React, { Context, FC, useEffect, useState } from "react";
 import styled from "styled-components";
 import Label from "./components/Label";
+import User from "./components/Layout/User";
 import Square from "./components/Square";
 import { IsNext, SquareState, Winner } from "./types";
+
+export const UserContext: Context<string> = React.createContext("");
+export const ThemeContext: Context<string> = React.createContext("dark");
 
 const App: FC = (): JSX.Element => {
   const [winner, setWinner] = useState<Winner>(null);
@@ -101,6 +105,12 @@ const App: FC = (): JSX.Element => {
         {renderSquare(7)}
         {renderSquare(8)}
       </section>
+
+      <ThemeContext.Provider value="light">
+        <UserContext.Provider value="Dale">
+          <User />
+        </UserContext.Provider>
+      </ThemeContext.Provider>
     </Container>
   );
 };
