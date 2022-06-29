@@ -2,11 +2,11 @@ import React, { FC, useEffect, useState } from "react";
 import styled from "styled-components";
 import Label from "./components/Label";
 import Square from "./components/Square";
-import { IsNext, SquareState, Winner } from "./types";
+import { IsNext, SquareState, Winner, History } from "./types";
 
 const App: FC = (): JSX.Element => {
   const [winner, setWinner] = useState<Winner>(null);
-  const [history, setHistory] = useState<any>([]);
+  const [history, setHistory] = useState<History[]>([]);
   const [state, setState] = useState<SquareState>({
     squares: Array(9).fill(null),
     isNext: true,
