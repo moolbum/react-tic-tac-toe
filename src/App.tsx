@@ -88,6 +88,8 @@ const App: FC = (): JSX.Element => {
         <Section>
           <h2>winner : {winner}</h2>
           <Button onClick={handleResetClick}>Reset</Button>
+          <Button onClick={handleResetClick}>Reset</Button>
+          <Button onClick={handleResetClick}>Reset</Button>
         </Section>
       ) : (
         <Section>
