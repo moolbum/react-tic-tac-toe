@@ -1,6 +1,6 @@
 <h1>React - Tic Tac Toe</h1>
 
-🔗 **시안확인** (vercel): https://react-tic-tac-i5ilz7bwj-moolbum.vercel.app/
+🔗 **시안확인** (vercel): https://react-tic-tac-toe-moolbum.vercel.app/
 
 <br/>
 
