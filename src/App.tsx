@@ -1,30 +1,16 @@
-import React, { Context, FC, useEffect, useState } from "react";
+import React, { FC, useEffect, useState } from "react";
 import styled from "styled-components";
 import Label from "./components/Label";
 import Square from "./components/Square";
 import { IsNext, SquareState, Winner } from "./types";
-// import User from "./components/Layout/User";
-
-export const UserContext: Context<string> = React.createContext("");
-export const ThemeContext: Context<string> = React.createContext("dark");
-export const StateContext: Context<{ name: string; age: number }> =
-  React.createContext({ name: "Moolbum", age: 29 });
-export const SetStateContext: Context<any> = React.createContext(() => {});
 
 const App: FC = (): JSX.Element => {
   const [winner, setWinner] = useState<Winner>(null);
-  const [history, setHistory] = useState<any>();
+  const [history, setHistory] = useState<any>([]);
   const [state, setState] = useState<SquareState>({
     squares: Array(9).fill(null),
     isNext: true,
   });
-
-  const getHistoryState = (square: any) => {
-    const array = square;
-    const historyState = [array, ...array];
-    setHistory(historyState);
-    console.log(history);
-  };
 
   const handleClick = (i: number) => {
     const square = state.squares.slice();
@@ -36,7 +22,7 @@ const App: FC = (): JSX.Element => {
       squares: square,
       isNext: !state.isNext,
     });
-    getHistoryState(square);
+    setHistory([...history, { state }]);
   };
 
   const handleResetClick = (): void => {
@@ -44,6 +30,7 @@ const App: FC = (): JSX.Element => {
       squares: Array(9).fill(null),
       isNext: true,
     });
+    setHistory([]);
   };
 
   const renderSquare = (i: number) => {
@@ -74,6 +61,14 @@ const App: FC = (): JSX.Element => {
     return null;
   };
 
+  const handleHistoryClick = (state: any) => {
+    console.log(state);
+    setState({
+      squares: state.squares,
+      isNext: state.isNext,
+    });
+  };
+
   useEffect(() => {
     setWinner(calculate(state.squares));
   }, [state.squares]);
@@ -88,8 +83,6 @@ const App: FC = (): JSX.Element => {
         <Section>
           <h2>winner : {winner}</h2>
           <Button onClick={handleResetClick}>Reset</Button>
-          <Button onClick={handleResetClick}>Reset</Button>
-          <Button onClick={handleResetClick}>Reset</Button>
         </Section>
       ) : (
         <Section>
@@ -98,31 +91,37 @@ const App: FC = (): JSX.Element => {
         </Section>
       )}
 
-      <section>
-        {renderSquare(0)}
-        {renderSquare(1)}
-        {renderSquare(2)}
-      </section>
-      <section>
-        {renderSquare(3)}
-        {renderSquare(4)}
-        {renderSquare(5)}
-      </section>
-      <section>
-        {renderSquare(6)}
-        {renderSquare(7)}
-        {renderSquare(8)}
-      </section>
+      <Game>
+        <Board>
+          <article>
+            {renderSquare(0)}
+            {renderSquare(1)}
+            {renderSquare(2)}
+          </article>
+          <article>
+            {renderSquare(3)}
+            {renderSquare(4)}
+            {renderSquare(5)}
+          </article>
+          <article>
+            {renderSquare(6)}
+            {renderSquare(7)}
+            {renderSquare(8)}
+          </article>
+        </Board>
 
-      {/* <ThemeContext.Provider value="light">
-        <UserContext.Provider value="Dale">
-          <SetStateContext.Provider value={setContext}>
-            <StateContext.Provider value={context}>
-              <User />
-            </StateContext.Provider>
-          </SetStateContext.Provider>
-        </UserContext.Provider>
-      </ThemeContext.Provider> */}
+        <Ul>
+          {history.map(({ state }: any, idx: any) => {
+            return (
+              <li key={idx}>
+                <button onClick={() => handleHistoryClick(state)}>
+                  {idx + 1} 번째
+                </button>
+              </li>
+            );
+          })}
+        </Ul>
+      </Game>
     </Container>
   );
 };
@@ -150,8 +149,16 @@ const Container = styled.article`
     font-size: 20px;
     padding: 20px 0;
   }
+`;
 
-  section {
+const Game = styled.section`
+  width: 30%;
+  display: flex;
+  justify-content: space-between;
+`;
+
+const Board = styled.section`
+  article {
     display: flex;
     padding: 0;
     text-align: center;
@@ -160,6 +167,7 @@ const Container = styled.article`
 
 const Section = styled.section`
   width: 220px;
+  display: flex;
   justify-content: space-between;
   align-items: center;
 `;
@@ -173,4 +181,15 @@ const Button = styled.button`
   color: white;
   font-size: 18px;
   cursor: pointer;
+`;
+
+const Ul = styled.ul`
+  button {
+    padding: 5px 10px;
+    margin: 2px 0;
+    border-radius: 4px;
+    border: none;
+    background: #eeeeee;
+    cursor: pointer;
+  }
 `;
