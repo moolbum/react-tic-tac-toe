@@ -9,3 +9,7 @@ export interface SquareState {
   squares: Array<string>;
   isNext: boolean;
 }
+
+export interface History {
+  state: SquareState;
+}
