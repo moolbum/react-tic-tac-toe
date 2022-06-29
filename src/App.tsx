@@ -1,9 +1,9 @@
 import React, { Context, FC, useEffect, useState } from "react";
 import styled from "styled-components";
 import Label from "./components/Label";
-import User from "./components/Layout/User";
 import Square from "./components/Square";
 import { IsNext, SquareState, Winner } from "./types";
+// import User from "./components/Layout/User";
 
 export const UserContext: Context<string> = React.createContext("");
 export const ThemeContext: Context<string> = React.createContext("dark");
@@ -87,6 +87,8 @@ const App: FC = (): JSX.Element => {
       {winner ? (
         <Section>
           <h2>winner : {winner}</h2>
+          <Button onClick={handleResetClick}>Reset</Button>
+          <Button onClick={handleResetClick}>Reset</Button>
           <Button onClick={handleResetClick}>Reset</Button>
         </Section>
       ) : (
