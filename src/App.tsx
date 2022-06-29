@@ -7,6 +7,9 @@ import { IsNext, SquareState, Winner } from "./types";
 
 export const UserContext: Context<string> = React.createContext("");
 export const ThemeContext: Context<string> = React.createContext("dark");
+export const StateContext: Context<{ name: string; age: number }> =
+  React.createContext({ name: "Moolbum", age: 29 });
+export const SetStateContext: Context<any> = React.createContext(() => {});
 
 const App: FC = (): JSX.Element => {
   const [winner, setWinner] = useState<Winner>(null);
@@ -84,10 +87,13 @@ const App: FC = (): JSX.Element => {
       {winner ? (
         <Section>
           <h2>winner : {winner}</h2>
-          <button onClick={handleResetClick}>Reset</button>
+          <Button onClick={handleResetClick}>Reset</Button>
         </Section>
       ) : (
-        <h2>순서 : {state.isNext ? IsNext.x : IsNext.o}</h2>
+        <Section>
+          <h2>순서 : {state.isNext ? IsNext.x : IsNext.o}</h2>
+          <Button onClick={handleResetClick}>Reset</Button>
+        </Section>
       )}
 
       <section>
@@ -106,11 +112,15 @@ const App: FC = (): JSX.Element => {
         {renderSquare(8)}
       </section>
 
-      <ThemeContext.Provider value="light">
+      {/* <ThemeContext.Provider value="light">
         <UserContext.Provider value="Dale">
-          <User />
+          <SetStateContext.Provider value={setContext}>
+            <StateContext.Provider value={context}>
+              <User />
+            </StateContext.Provider>
+          </SetStateContext.Provider>
         </UserContext.Provider>
-      </ThemeContext.Provider>
+      </ThemeContext.Provider> */}
     </Container>
   );
 };
@@ -150,15 +160,15 @@ const Section = styled.section`
   width: 220px;
   justify-content: space-between;
   align-items: center;
+`;
 
-  button {
-    height: 35px;
-    padding: 5px 20px;
-    border-radius: 20px;
-    border: none;
-    background: black;
-    color: white;
-    font-size: 18px;
-    cursor: pointer;
-  }
+const Button = styled.button`
+  height: 35px;
+  padding: 5px 20px;
+  border-radius: 20px;
+  border: none;
+  background: black;
+  color: white;
+  font-size: 18px;
+  cursor: pointer;
 `;

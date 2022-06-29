@@ -1,5 +1,10 @@
 import React from "react";
-import { UserContext, ThemeContext } from "../../../App";
+import {
+  UserContext,
+  ThemeContext,
+  SetStateContext,
+  StateContext,
+} from "../../../App";
 
 const User = () => {
   return (
@@ -7,6 +12,12 @@ const User = () => {
       유저
       <UserContext.Consumer>{(value) => <p>{value}</p>}</UserContext.Consumer>
       <ThemeContext.Consumer>{(value) => <p>{value}</p>}</ThemeContext.Consumer>
+      <StateContext.Consumer>
+        {(value) => <p>나이 : {value.age}</p>}
+      </StateContext.Consumer>
+      <StateContext.Consumer>
+        {(value) => <p>이름 : {value.name}</p>}
+      </StateContext.Consumer>
     </div>
   );
 };
